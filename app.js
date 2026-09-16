@@ -14,11 +14,18 @@ const TOKENS = {
   BLK:  { sym:"BLK",  name:"Blockmine", price:75.89,  color:"#06b6d4", bal:220.4,   vol:0.013 },
 };
 const LIST_TOKENS = ["UNI","BNB","BLK","BITE"];   // hero list order (like reference)
+const NODE_CARDS = [
+  {emoji:"🌐", title:"VoxNodes Node Network", text:"Decentralized services and tools enabling automated node hosting and management for everyone.", theme:"violet"},
+  {emoji:"◈", title:"VXL Liquidity Grid", text:"Route swaps through a resilient liquidity layer built for fast, transparent movement.", theme:"silver"},
+  {emoji:"✦", title:"GameFi World Engine", text:"Composable rails for NFT economies, virtual worlds, and the next generation of play.", theme:"cyan"},
+  {emoji:"⌁", title:"Autonomous Builders", text:"Ship programmable on-chain experiences with modular tools made for ambitious teams.", theme:"orange"}
+];
 
 /* ---------------- state ---------------- */
 let sellTok = "ETH", buyTok = "USDC";
 let slippage = 0.5;
 let history = [];
+let nodeIndex = 0;
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -168,6 +175,26 @@ function quickSwap(sym){
   toast(`Loaded ${sym} → USDC`);
 }
 
+/* ---------------- hero card carousel ---------------- */
+function renderNodeCard(index=nodeIndex){
+  nodeIndex = (index + NODE_CARDS.length) % NODE_CARDS.length;
+  const card = NODE_CARDS[nodeIndex];
+  const art = $("#nodeArt");
+  if(!art) return;
+  art.dataset.theme = card.theme;
+  $("#nodeCount").textContent = `${nodeIndex + 1} / ${NODE_CARDS.length}`;
+  $("#nodeTitle").textContent = `${card.emoji} ${card.title}`;
+  $("#nodeDescription").textContent = card.text;
+  $("#nodeDots").innerHTML = NODE_CARDS.map((_,i)=>`<i class="${i===nodeIndex?"on":""}" onclick="setNodeCard(${i})" aria-label="Show card ${i+1}"></i>`).join("");
+}
+function setNodeCard(index){ renderNodeCard(index); }
+function cycleNodeCard(){ renderNodeCard(nodeIndex + 1); }
+function openSwapFromNav(){
+  switchView("swap");
+  const cta = $("#headerCta");
+  if(cta){ cta.classList.add("clicked"); setTimeout(()=>cta.classList.remove("clicked"),500); }
+}
+
 /* ---------------- execute swap ---------------- */
 function doSwap(){
   const sellIn = parseFloat($("#sellInput").value)||0;
@@ -229,11 +256,12 @@ function setSlip(v, btn){
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{
-  renderHeroList(); renderSwapBtn(0); renderTokenButtons(); renderBalances(); renderHistory();
+  renderHeroList(); renderNodeCard(); renderSwapBtn(0); renderTokenButtons(); renderBalances(); renderHistory();
   updateQuote();
   countUp($("#txCount"), 932973890, 2600);
   $("#sellInput").addEventListener("input", ()=>updateQuote());
   $("#tokenSearch").addEventListener("input", e=>renderPicker(e.target.value));
   $$(".modal-back").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) m.classList.remove("open"); }));
   document.addEventListener("keydown", e=>{ if(e.key==="Escape") $$(".modal-back.open").forEach(m=>m.classList.remove("open")); });
+  setInterval(cycleNodeCard, 6500);
 });

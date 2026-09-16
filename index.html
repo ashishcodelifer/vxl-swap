@@ -26,14 +26,19 @@
     </div>
     <div class="nav-right">
       <button class="round-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
-      <button class="pill-btn" onclick="switchView('swap')">Buy $VXL&nbsp;↗</button>
+      <button class="pill-btn" id="headerCta" onclick="openSwapFromNav()">Buy $VXL&nbsp;↗</button>
     </div>
   </nav>
 
   <!-- ============ HOME ============ -->
   <section id="view-home" class="view active">
     <div class="hero">
-      <div>
+      <div class="hero-copy">
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="silver-coin"><span>V</span></div>
+          <div class="coin-shadow"></div>
+        </div>
         <h1>Swap, earn, and build on the <span class="grad">decentralized</span> crypto protocol</h1>
         <p class="sub">Voxel-X is one of the leading providers of technological platforms for projects in the emerging NFT, GameFi &amp; Metaverse space.</p>
         <div class="hero-actions">
@@ -59,11 +64,11 @@
         <div class="token-list glass" id="tokenList"></div>
 
         <div class="node-card glass">
-          <div class="tile"><img src="assets/node-tile.jpg" alt="VoxNodes"><span class="n">1 / 4</span></div>
+          <div class="tile node-art" id="nodeArt"><span class="node-glyph">V</span><span class="n" id="nodeCount">1 / 4</span></div>
           <div class="node-body">
-            <h4>🌐 VoxNodes Node Network</h4>
-            <p>Decentralized services and tools enabling automated node hosting and management for everyone.</p>
-            <div class="dots"><i class="on"></i><i onclick="toast('Slide 2 (demo)')"></i><i onclick="toast('Slide 3 (demo)')"></i><i onclick="toast('Slide 4 (demo)')"></i></div>
+            <h4 id="nodeTitle">🌐 VoxNodes Node Network</h4>
+            <p id="nodeDescription">Decentralized services and tools enabling automated node hosting and management for everyone.</p>
+            <div class="dots" id="nodeDots"></div>
             <div class="node-foot">
               <button class="pill-btn purple" onclick="switchView('swap')">Buy $VXL&nbsp;↗</button>
               <div class="socials">
