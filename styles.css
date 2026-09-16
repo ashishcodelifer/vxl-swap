@@ -140,6 +140,7 @@ body:not(.light) .token-row.active .t-price,body:not(.light) .token-row.active .
 .dots i{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s}
 .dots i.on{background:var(--text);transform:scale(1.25)}
 .node-foot{display:flex;gap:10px;align-items:center}
+.node-foot .pill-btn{flex-shrink:0}
 .socials{display:flex;gap:6px;margin-left:auto}
 .socials a{width:26px;height:26px;border-radius:50%;background:var(--glass-strong);display:grid;place-items:center;font-size:11px;transition:.2s}
 .socials a:hover{transform:translateY(-2px)}
@@ -182,7 +183,7 @@ body:not(.light) .token-row.active .t-price,body:not(.light) .token-row.active .
 }
 .flip-btn:hover{transform:rotate(180deg);border-color:var(--accent)}
 .swap-details{margin:16px 2px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--muted)}
-.swap-details .row{display:flex;justify-content:space-between;gap:10px}
+.swap-details .row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
 .swap-details b{color:var(--text);font-weight:600}
 .slippage-btns{display:flex;gap:4px}
 .slippage-btns button{border:1px solid var(--border);background:transparent;color:var(--muted);font:600 10.5px var(--font);padding:3px 8px;border-radius:7px;cursor:pointer;transition:.15s}
@@ -271,4 +272,24 @@ body.light .confirm-body .warn{color:#b45309}
   .tok-btn{padding:7px 9px;font-size:12px}
   .hrow{gap:8px;align-items:flex-start}
   .hrow .st{display:none}
+  .node-foot{flex-wrap:wrap}
+  .socials{margin-left:0}
+  .swap-details .row{align-items:flex-start;flex-wrap:wrap}
+  .swap-details .row>span:first-child{min-width:0;overflow-wrap:anywhere}
+  .swap-details .row>b{margin-left:auto}
+  .hrow .amt{min-width:0;overflow-wrap:anywhere}
+  .hrow .amt b{line-height:1.35}
+}
+
+@media (max-width:380px){
+  .nav{display:grid;grid-template-columns:1fr auto;gap:8px}
+  .nav-right{margin-left:0;justify-content:flex-end}
+  .nav-right .round-btn{width:32px;height:32px}
+  .nav-right .pill-btn{padding:8px 10px;font-size:11px}
+  .swap-panel,.history{padding:12px}
+  .sb-row{gap:5px}
+  .sb-row input{font-size:22px}
+  .tok-btn{max-width:43%;overflow:hidden;text-overflow:ellipsis;padding:6px 7px}
+  .tok-btn .t-ico{flex:0 0 auto}
+  .slippage-btns{width:100%;justify-content:flex-end}
 }

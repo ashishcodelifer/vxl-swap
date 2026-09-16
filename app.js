@@ -242,8 +242,9 @@ function renderHistory(){
 /* ---------------- misc UI ---------------- */
 function switchView(v){
   $$(".view").forEach(x=>x.classList.toggle("active", x.id==="view-"+v));
+  $$(".modal-back.open").forEach(m=>m.classList.remove("open"));
   if(v==="home"){ $("#txCount") && countUp($("#txCount"), 932973890); }
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({top:0,behavior:"auto"});
 }
 function closeModal(sel){ $(sel).classList.remove("open"); }
 function toggleTheme(){
