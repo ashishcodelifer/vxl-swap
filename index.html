@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VXL Protocol — Swap Interface</title>
+<meta name="description" content="VXL Protocol: swap, earn, and build on the decentralized crypto protocol. Interactive swap-interface prototype.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%238b5cf6'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>V</text></svg>">
+</head>
+<body>
+<div class="scene">
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav glass">
+    <a class="logo" onclick="switchView('home')"><span class="mark">V</span> VXL</a>
+    <div class="nav-links">
+      <a onclick="toast('Why VXL (demo)')">Why VXL&nbsp;▾</a>
+      <a onclick="toast('Team (demo)')">Team</a>
+      <a onclick="toast('Partners (demo)')">Partners</a>
+      <a onclick="toast('Ask VXL (demo)')">Ask VXL</a>
+      <a onclick="toast('Whitepaper (demo)')">Whitepaper</a>
+      <a onclick="toast('Pitchdeck (demo)')">Pitchdeck&nbsp;↗</a>
+    </div>
+    <div class="nav-right">
+      <button class="round-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+      <button class="pill-btn" onclick="switchView('swap')">Buy $VXL&nbsp;↗</button>
+    </div>
+  </nav>
+
+  <!-- ============ HOME ============ -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <div>
+        <h1>Swap, earn, and build on the <span class="grad">decentralized</span> crypto protocol</h1>
+        <p class="sub">Voxel-X is one of the leading providers of technological platforms for projects in the emerging NFT, GameFi &amp; Metaverse space.</p>
+        <div class="hero-actions">
+          <button class="pill-btn purple" onclick="switchView('swap')">Launch Swap&nbsp;↗</button>
+          <button class="watch" onclick="toast('Video player (demo)')">
+            <span class="play">▶</span>
+            <span>Watch visual<small>building-video series</small></span>
+          </button>
+        </div>
+        <div class="hero-foot">
+          <div class="certik">
+            <span class="shield">🛡</span>
+            <span><b>Certik</b>Official Security Partner</span>
+          </div>
+          <div class="tx-count">
+            <b id="txCount">0</b>
+            <span>Total transactions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="side">
+        <div class="token-list glass" id="tokenList"></div>
+
+        <div class="node-card glass">
+          <div class="tile"><img src="assets/node-tile.jpg" alt="VoxNodes"><span class="n">1 / 4</span></div>
+          <div class="node-body">
+            <h4>🌐 VoxNodes Node Network</h4>
+            <p>Decentralized services and tools enabling automated node hosting and management for everyone.</p>
+            <div class="dots"><i class="on"></i><i onclick="toast('Slide 2 (demo)')"></i><i onclick="toast('Slide 3 (demo)')"></i><i onclick="toast('Slide 4 (demo)')"></i></div>
+            <div class="node-foot">
+              <button class="pill-btn purple" onclick="switchView('swap')">Buy $VXL&nbsp;↗</button>
+              <div class="socials">
+                <a onclick="toast('X (demo)')">𝕏</a><a onclick="toast('Discord (demo)')">◈</a>
+                <a onclick="toast('Telegram (demo)')">✈</a><a onclick="toast('GitHub (demo)')">⌥</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SWAP ============ -->
+  <section id="view-swap" class="view">
+    <div class="swap-wrap">
+      <div class="swap-panel glass">
+        <div class="sp-head">Swap
+          <span class="mini">
+            <button class="round-btn" style="width:32px;height:32px;font-size:13px" onclick="toast('Settings (demo)')" title="Settings">⚙</button>
+            <button class="round-btn" style="width:32px;height:32px;font-size:13px" onclick="toast('History cleared')" title="Refresh">⟳</button>
+          </span>
+        </div>
+
+        <div class="swap-box" id="sellBox">
+          <div class="sb-label"><span>Sell</span><span class="bal" id="sellBal"></span></div>
+          <div class="sb-row">
+            <input id="sellInput" type="text" inputmode="decimal" placeholder="0.0" autocomplete="off">
+            <button class="tok-btn" id="sellTokBtn" onclick="openPicker('sell')"></button>
+          </div>
+          <div class="sb-fiat"><span id="sellFiat">$0.00</span><span class="bal" onclick="setMax()">MAX</span></div>
+        </div>
+
+        <div class="flip-row">
+          <button class="flip-btn" onclick="flipTokens()" title="Flip tokens">⇅</button>
+        </div>
+
+        <div class="swap-box" id="buyBox">
+          <div class="sb-label"><span>Buy</span><span id="buyBal"></span></div>
+          <div class="sb-row">
+            <input id="buyInput" type="text" placeholder="0.0" readonly>
+            <button class="tok-btn" id="buyTokBtn" onclick="openPicker('buy')"></button>
+          </div>
+          <div class="sb-fiat"><span id="buyFiat">$0.00</span></div>
+        </div>
+
+        <div class="swap-details">
+          <div class="row"><span id="rateLine"></span>
+            <span class="slippage-btns">
+              <button onclick="setSlip(0.1,this)">0.1%</button>
+              <button class="on" onclick="setSlip(0.5,this)">0.5%</button>
+              <button onclick="setSlip(1,this)">1.0%</button>
+            </span>
+          </div>
+          <div class="row"><span>Network fee</span><b>≈ $0.51</b></div>
+          <div class="row"><span id="impactLine"></span><b>Route: VXL&nbsp;↔&nbsp;Auto</b></div>
+        </div>
+
+        <button class="swap-cta disabled" id="swapCta" onclick="doSwap()">Enter an amount</button>
+      </div>
+
+      <div class="history glass">
+        <h3>🕑 Recent swaps <span style="margin-left:auto;font-size:11px;color:var(--muted);font-weight:500">local session</span></h3>
+        <div id="histRows"></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot-note">Prototype inspired by <a href="https://dribbble.com/shots/22266291-Swap-Interface-Ui-Design-Concepts" target="_blank" rel="noopener">Swap Interface UI Design Concepts — Arina on Dribbble</a>. Built with vanilla HTML/CSS/JS. Not financial advice.</p>
+</div>
+
+<!-- token picker -->
+<div class="modal-back" id="tokenModal">
+  <div class="modal">
+    <h3>Select a token <button class="x-btn" onclick="closeModal('#tokenModal')">✕</button></h3>
+    <div class="m-search">🔍<input id="tokenSearch" placeholder="Search name or symbol"></div>
+    <div id="tokenRows" style="overflow:auto"></div>
+  </div>
+</div>
+
+<!-- confirm swap -->
+<div class="modal-back" id="confirmModal">
+  <div class="modal">
+    <h3>Confirm swap <button class="x-btn" onclick="closeModal('#confirmModal')">✕</button></h3>
+    <div class="confirm-body">
+      <div id="cfFrom"></div>
+      <div class="big-arrow">↓</div>
+      <div id="cfTo"></div>
+      <div class="rate" id="cfRate"></div>
+      <div class="rate">Slippage tolerance: <b><span id="cfSlip"></span>%</b> · Fee 0.3%</div>
+      <div class="warn">⚠ Price is simulated — this is a UI prototype, no real transactions occur.</div>
+      <button class="pill-btn purple" style="width:100%;justify-content:center;margin-top:16px" onclick="confirmSwap()">Confirm swap</button>
+    </div>
+    <div class="processing" id="procBox">
+      <div class="spinner"></div>
+      <div id="procTxt" style="font-size:13px;color:var(--muted)">Swapping…</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span>◆</span><span id="toast-msg"></span></div>
+
+<script src="app.js"></script>
+</body>
+</html>
